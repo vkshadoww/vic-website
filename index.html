@@ -10,11 +10,21 @@
     <button onclick="addOne()">Add 1</button>
 
     <script>
-        let count = 0; 
+        // 1. Try to find the "count" cookie when the page loads
+        let cookieValue = document.cookie.split("; ").find((row) => row.startsWith("count="));
+        
+        // 2. If the cookie exists, use it. Otherwise, start at 0.
+        let count = cookieValue ? parseInt(cookieValue.split("=")[1]) : 0;
+
+        // 3. Update the display immediately with the saved number
+        document.getElementById("display").innerHTML = count;
 
         function addOne() {
             count = count + 1;
             document.getElementById("display").innerHTML = count;
+
+            // 4. Save the new count to the cookie (expires in 1 year)
+            document.cookie = "count=" + count + "; max-age=31536000; path=/";
         }
     </script>
 </body>
